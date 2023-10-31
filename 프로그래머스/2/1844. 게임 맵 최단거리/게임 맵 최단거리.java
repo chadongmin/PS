@@ -7,7 +7,7 @@ class Solution {
         int n = maps.length;
         int m = maps[0].length;
 		Q.offer(new int[]{0, 0});
-		int L =1;
+		int L = 1;
 		while(!Q.isEmpty()){
 			int len = Q.size();
 			for(int i = 0; i < len; i++){
