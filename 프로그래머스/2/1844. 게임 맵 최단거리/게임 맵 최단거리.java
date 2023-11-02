@@ -5,7 +5,9 @@ class Solution {
 		int[] dc = {0, 1, 0, -1};
 		Queue<int[]> Q = new LinkedList<>();
         int n = maps.length;
+       
         int m = maps[0].length;
+        
 		Q.offer(new int[]{0, 0});
 		int L = 1;
 		while(!Q.isEmpty()){
