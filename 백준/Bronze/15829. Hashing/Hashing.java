@@ -1,6 +1,8 @@
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class Main {
 
@@ -12,20 +14,22 @@ public class Main {
     public static void main(String[] args) throws Exception{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        long M = 1234567891;
+        long R =31;
+        long pow = 1;
 
-        int len = Integer.parseInt(br.readLine());
+        Long len = Long.parseLong(br.readLine());
         String str = br.readLine();
         char[] charArray = str.toCharArray();
-        double sum = 0;
+        long sum = 0;
 
         for (int i = 0 ; i<charArray.length;i++){
-            int num = (int)charArray[i] -96;
-            double pow = Math.pow(31, i);
-//            System.out.println("num = " + num);
-//            System.out.println("pow = " + pow);
-            sum += (num * pow);
+           sum += (charArray[i] - 96) * pow % M;
+           pow = pow * R % M;
+
         }
-        System.out.println((int)sum % 1234567891);
+        System.out.println(sum % M);
+
     }
 
 }
