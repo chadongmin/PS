@@ -1,23 +1,33 @@
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int num = sc.nextInt();
-        int stringNum = sc.nextInt();
-        Map<String, Integer> map = new HashMap<>();
-        for(int i = 0 ; i < num; i++){
-            String str = sc.next();
-            map.put(str, map.getOrDefault(str, 0)+1);
-        }
-        int cnt = 0;
-        for (int i = 0; i < stringNum; i++) {
-            String target = sc.next();
-            if (map.containsKey(target)) cnt++;
-        }
-        System.out.println(cnt);
-    }
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int M = sc.nextInt();
+
+		String[] str = new String[N];
+		for (int i = 0; i < N; i++) {
+			str[i] = sc.next();
+		}
+		Arrays.sort(str);
+
+		String[] target = new String[M];
+		int ans= 0;
+		for (int i = 0; i < M; i++) {
+			target[i] = sc.next();
+			if (Arrays.binarySearch(str, target[i]) >= 0){
+				ans++;
+			}
+		}
+		System.out.println(ans);
+	}
+
 }
