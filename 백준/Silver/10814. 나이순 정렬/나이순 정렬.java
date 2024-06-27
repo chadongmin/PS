@@ -1,6 +1,6 @@
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,46 +10,40 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		int tc = sc.nextInt();
 
+		List<Person> list = new ArrayList<>();
 		int cnt = 1;
 
-		Person[] personList = new Person[tc];
 		for (int i = 0; i < tc; i++) {
 
 			int age = sc.nextInt();
 			String name = sc.next();
-			Person person = new Person(cnt,age, name);
-			cnt++;
-
-			personList[i]= person;
+			Person person = new Person(age, name, cnt++);
+			list.add(person);
 		}
-		Arrays.sort(personList, new Comparator<Person>() {
-			@Override
-			public int compare(Person o1, Person o2) {
-				if (o1.getAge() == o2.getAge()){
-					return o1.getCnt() - o2.getCnt();
-				}return o1.getAge() - o2.getAge();
+
+		list.sort((o1, o2) ->
+		{
+			if (o1.age == o2.age) {
+				return o1.cnt - o2.cnt;
 			}
+			return o1.age - o2.age;
 		});
 
-		for (int i = 0; i < personList.length; i++) {
-			System.out.println(personList[i].getAge()+" "+personList[i].getName());
+		for (var l : list) {
+			System.out.println(l.getAge() + " " + l.getName());
 		}
 	}
 
 	static class Person {
 
-		private int cnt;
-		private Integer age;
-		private String name;
+		int age;
+		String name;
+		int cnt;
 
-		public Person(int cnt, int age, String name) {
-			this.cnt = cnt;
+		public Person(int age, String name, int cnt) {
 			this.age = age;
 			this.name = name;
-		}
-
-		public int getCnt() {
-			return cnt;
+			this.cnt = cnt;
 		}
 
 		public int getAge() {
@@ -58,6 +52,10 @@ public class Main {
 
 		public String getName() {
 			return name;
+		}
+
+		public int getCnt() {
+			return cnt;
 		}
 	}
 
