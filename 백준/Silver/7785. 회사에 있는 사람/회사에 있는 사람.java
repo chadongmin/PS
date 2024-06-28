@@ -1,11 +1,9 @@
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -13,28 +11,27 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 
-		int tc = sc.nextInt();
+		Set<String> set = new TreeSet<>();
 
-		Map<String, String >map = new HashMap<>();
+		int tc = sc.nextInt();
 
 		for (int i = 0; i < tc; i++) {
 			String name = sc.next();
 			String status = sc.next();
 
-			map.put(name, status);
-			if (status.equals("leave")){
-				map.remove(name);
+			if (status.equals("enter")) {
+				set.add(name);
+			} else {
+				set.remove(name);
 			}
 		}
-		List<String > list = new ArrayList<>();
-		for (var k : map.keySet()){
-			list.add(k);
-		}
-		Collections.sort(list, Collections.reverseOrder());
+		List<String> collect = set.stream().collect(Collectors.toList());
 
-		for (var l : list){
-			System.out.println(l);
+		for (int i = collect.size() - 1; i > -1; i--) {
+			System.out.println(collect.get(i));
 		}
+
+
 	}
 
 }
