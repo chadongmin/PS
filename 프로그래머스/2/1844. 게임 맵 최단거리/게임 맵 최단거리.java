@@ -1,42 +1,40 @@
 import java.util.*;
 class Solution {
-    public int solution(int[][] maps) {
-        
-        int[] dx = {-1, 0, 1, 0};
-        int[] dy = {0, 1, 0, -1};
-        int[][] result;
+    public static int solution(int[][] maps) {
+        int yLen = maps.length;
+        int xLen = maps[0].length;
+        int[][] visited = new int[yLen][xLen];
+
+        // 동(→), 북(↑), 서(←), 남(↓)
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, -1, 0, 1};
 
         Queue<int[]> queue = new LinkedList<>();
-        int N = maps.length;
-        int M = maps[0].length;
-
-        result = new int[N][M];
-        //1. 시작 노드 큐에 넣기
         queue.add(new int[]{0, 0});
-        // 방문처리
-        result[0][0] = 1;
+        visited[0][0] = 1; // 시작점 거리 = 1
 
         while (!queue.isEmpty()) {
             int[] now = queue.poll();
+            int y = now[0];
+            int x = now[1];
 
-            //갈 수 있는지 판단
             for (int i = 0; i < 4; i++) {
-                int x = now[0] + dx[i];
-                int y = now[1] + dy[i];
+                int nextY = y + dy[i];
+                int nextX = x + dx[i];
 
-                if (x < 0 || y < 0 || x >= N || y >= M) {
-                    continue;
-                }
-                if (maps[x][y] == 0) {
-                    continue;
-                }
-                if (result[x][y] == 0) {
-                    queue.add(new int[]{x, y});
-                    result[x][y] = result[now[0]][now[1]] + 1;
-                }
+                // 맵 범위 벗어나면 skip
+                if (nextX < 0 || nextX >= xLen || nextY < 0 || nextY >= yLen) continue;
+                // 벽이거나 이미 방문했다면 skip
+                if (maps[nextY][nextX] == 0 || visited[nextY][nextX] != 0) continue;
+
+                // 다음 위치 방문 처리
+                visited[nextY][nextX] = visited[y][x] + 1;
+                queue.add(new int[]{nextY, nextX});
             }
         }
 
-        return result[N - 1][M - 1] == 0 ? -1 : result[N - 1][M - 1];
+        int result = visited[yLen - 1][xLen - 1];
+        return result == 0 ? -1 : result;
     }
+       
 }
