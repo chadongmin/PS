@@ -1,40 +1,37 @@
 import java.util.*;
 class Solution {
     public static int solution(int[][] maps) {
-        int yLen = maps.length;
-        int xLen = maps[0].length;
-        int[][] visited = new int[yLen][xLen];
 
-        // 동(→), 북(↑), 서(←), 남(↓)
         int[] dx = {1, 0, -1, 0};
-        int[] dy = {0, -1, 0, 1};
+        int[] dy = {0, 1, 0, -1};
 
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{0, 0});
-        visited[0][0] = 1; // 시작점 거리 = 1
+        int row = maps.length;
+        int column = maps[0].length;
+        int[][] result = new int[row][column];
 
-        while (!queue.isEmpty()) {
-            int[] now = queue.poll();
-            int y = now[0];
-            int x = now[1];
-
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{0, 0});
+        result[0][0] = 1;
+        while (!q.isEmpty()) {
+            int[] now = q.poll();
             for (int i = 0; i < 4; i++) {
-                int nextY = y + dy[i];
-                int nextX = x + dx[i];
+                int x = dx[i] + now[0];
+                int y = dy[i] + now[1];
 
-                // 맵 범위 벗어나면 skip
-                if (nextX < 0 || nextX >= xLen || nextY < 0 || nextY >= yLen) continue;
-                // 벽이거나 이미 방문했다면 skip
-                if (maps[nextY][nextX] == 0 || visited[nextY][nextX] != 0) continue;
-
-                // 다음 위치 방문 처리
-                visited[nextY][nextX] = visited[y][x] + 1;
-                queue.add(new int[]{nextY, nextX});
+                if (x >= row || x < 0 || y >= column || y < 0) {
+                    continue;
+                }
+                if (maps[x][y] == 0) {
+                    continue;
+                }
+                if (result[x][y] == 0) {
+                    q.add(new int[]{x, y});
+                    result[x][y] = result[now[0]][now[1]] + 1;
+                }
             }
-        }
 
-        int result = visited[yLen - 1][xLen - 1];
-        return result == 0 ? -1 : result;
+        }
+        if (result[row - 1][column - 1] == 0) return -1;
+        return result[row - 1][column - 1];
     }
-       
 }
